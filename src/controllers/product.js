@@ -71,9 +71,45 @@ const editProduct = async(req = request, res = response) => {
         res.status(500).json({ msg: 'Something went wrong' });
     }
 }
+const enableProduct = async(req = request, res = response) => {
+    try {
+        const { productID } = req.params;
+        const productDB = await Product.findOne({where: {productCode: Number(productID)}});
+        if(!productDB) {
+            return res.status(404).json({ msg: 'product not found' });
+        }
+        if(productDB.enabled) {
+            return res.json({ msg: 'product has already been enabled' });
+        }
+        await productDB.update({enabled: true});
+        res.json({msg: 'product enabled correclty'});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'something went wrong' });
+    }
+};
 
+const disableProduct = async(req = request, res = response) => {
+    try {
+        const { productID } = req.params;
+        const productDB = await Product.findOne({where: {productCode: Number(productID)}});
+        if(!productDB) {
+            return res.status(404).json({ msg: 'product not found' });
+        }
+        if(!productDB.enabled) {
+            return res.json({ msg: 'product has already been disabled' });
+        }
+        await productDB.update({enabled: false});
+        res.json({msg: 'product disabled correclty'});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'something went wrong' });
+    }
+};
 module.exports = {
     getProducts,
     createProduct,
-    editProduct
+    editProduct,
+    disableProduct,
+    enableProduct
 };
