@@ -10,12 +10,17 @@ const validateProductName = (productName) => {
 
 const validateStock = (stock) => {
     const regExpStock = /^\d{0,4}$/;
-    console.log(regExpStock.test(stock));
     return regExpStock.test(stock);
+}
+
+const validatePrice = (price) => {
+    const regExpPrice = /^(([0-9][0-9]{0,2})([.][0-9][1-9]{0,1})?|1000|1000.00)$/;
+    return regExpPrice.test(price);
 }
 
 module.exports = {
     validateProductCode,
     validateProductName,
     validateStock,
+    validatePrice
 };
