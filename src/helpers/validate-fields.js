@@ -8,7 +8,14 @@ const validateProductName = (productName) => {
     return regExpName.test(productName);
 }
 
+const validateStock = (stock) => {
+    const regExpStock = /^\d{0,4}$/;
+    console.log(regExpStock.test(stock));
+    return regExpStock.test(stock);
+}
+
 module.exports = {
     validateProductCode,
-    validateProductName
+    validateProductName,
+    validateStock,
 };
