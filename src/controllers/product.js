@@ -12,6 +12,20 @@ const getProducts = async(req = request, res = response) => {
     }
 };
 
+const getProductByCode = async(req = request, res = response ) => {
+    try {
+        const { productID } = req.params;
+        const productDB = await Product.findOne({ where: {productCode : productID}});
+        if(!productDB) {
+            return res.status(404).json({ msg: 'Product not found' });
+        }
+        res.json({ product: productDB });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'Something went wrong' });
+    }
+}
+
 const createProduct = async(req = request, res = response) => {
     try {
         const { productCode, productName, stock } = req.body;
@@ -71,6 +85,7 @@ const editProduct = async(req = request, res = response) => {
         res.status(500).json({ msg: 'Something went wrong' });
     }
 }
+
 const enableProduct = async(req = request, res = response) => {
     try {
         const { productID } = req.params;
@@ -132,5 +147,6 @@ module.exports = {
     editProduct,
     disableProduct,
     enableProduct,
-    setPriceProduct
+    setPriceProduct,
+    getProductByCode
 };
