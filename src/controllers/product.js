@@ -107,7 +107,6 @@ const disableProduct = async(req = request, res = response) => {
     }
 };
 
-
 const setPriceProduct = async(req = request, res = response) => {
     try {
         const { productID } = req.params;
